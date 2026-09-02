@@ -1,0 +1,64 @@
+create table cliente (
+	id uuid not null primary key,
+	nome varchar (150) not null,
+	cpf varchar (11) not null unique,
+	email varchar (150) not null,
+	telefone varchar (20) not null
+);
+
+create table produto (
+	id uuid not null primary key,
+	nome varchar (150) not null,
+	descricao varchar (150) not null,
+	preco numeric (18,2) not null,
+
+	constraint chek_produto_preco
+       check (preco >= 0)
+);
+
+create table pedido (
+	id uuid not null primary key,
+	id_cliente uuid not null references cliente (id),
+	data date not null,
+	valor_total numeric (18,2) not null,
+	status varchar (30) not null,
+
+	constraint chek_pedido_valor
+       check (valor_total >= 0),
+
+	constraint chek_status_pedido
+         check (status in ('PENDENTE', 'EM_PRODUCAO', 'PRONTO', 'CANCELADO'))
+);
+
+create table pagamento (
+	id uuid not null primary key,
+	id_pedido uuid not null unique references pedido (id),
+	forma_pagamento varchar (30) not null,
+	valor numeric (18,2) not null,
+	status varchar (30) not null,
+	data timestamp not null,
+
+	constraint chek_forma_pagamento
+	        check (forma_pagamento in ('PIX', 'CARTAO', 'BOLETO')),
+
+	constraint chek_status_pagamento check (status in ('PENDENTE','CONFIRMADO','CANCELADO')),
+
+	constraint chek_pagamento_valor
+	       check (valor >= 0)
+);
+
+
+create table item_pedido (
+	id uuid not null primary key,
+	id_pedido uuid not null references pedido (id),
+	id_produto uuid not null references produto (id),
+	quantidade int not null,
+	preco_unitario numeric (18,2) not null,
+
+	constraint chek_item_quantidade
+	       check (quantidade > 0 ),
+
+	constraint chek_item_preco
+	       check (preco_unitario >= 0 )
+);
+
