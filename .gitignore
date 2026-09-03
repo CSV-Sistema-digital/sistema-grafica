@@ -3,8 +3,7 @@ target/
 *.class
 *.jar
 *.war
-.mvn/
-!.mvn/wrapper/maven-wrapper.jar
+
 
 ### Flutter / Dart (mobile) ###
 mobile/.dart_tool/
