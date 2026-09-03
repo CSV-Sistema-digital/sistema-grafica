@@ -1,11 +1,15 @@
 package br.com.grafica.backend.model;
 
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.math.BigDecimal;
 import java.util.UUID;
 
 @Entity
+@Getter
+@Setter
 @Table(name = "produto")
 public class Produto {
 

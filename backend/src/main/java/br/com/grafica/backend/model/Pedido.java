@@ -2,12 +2,16 @@ package br.com.grafica.backend.model;
 
 import br.com.grafica.backend.enums.StatusPedido;
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.UUID;
 
 @Entity
+@Getter
+@Setter
 @Table(name = "pedido")
 public class Pedido {
 
