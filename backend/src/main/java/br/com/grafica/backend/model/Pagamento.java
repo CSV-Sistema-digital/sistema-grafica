@@ -1,7 +1,7 @@
 package br.com.grafica.backend.model;
 
-import br.com.grafica.backend.Enum.FormaPagamento;
-import br.com.grafica.backend.Enum.StatusPagamento;
+import br.com.grafica.backend.enums.FormaPagamento;
+import br.com.grafica.backend.enums.StatusPagamento;
 import jakarta.persistence.*;
 
 import java.math.BigDecimal;
@@ -18,7 +18,7 @@ public class Pagamento {
     private UUID id;
 
     @OneToOne
-    @JoinColumn(name = "pedido_id",nullable = false, unique = true)
+    @JoinColumn(name = "id_pedido",nullable = false, unique = true)
     private Pedido pedido;
 
     @Enumerated(EnumType.STRING)

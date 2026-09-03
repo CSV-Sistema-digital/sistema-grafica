@@ -1,4 +1,4 @@
-package br.com.grafica.backend.Enum;
+package br.com.grafica.backend.enums;
 
 public enum FormaPagamento {
     PIX,

@@ -15,16 +15,16 @@ public class ItemPedido {
     private UUID id;
 
     @ManyToOne
-    @JoinColumn(name = "pedido_id", nullable = false)
+    @JoinColumn(name = "id_pedido", nullable = false)
     private Pedido pedido;
 
     @ManyToOne
-    @Column(name = "produto_id",nullable = false)
+    @JoinColumn(name = "id_produto",nullable = false)
     private Produto produto;
 
     @Column(name = "quantidade", nullable = false)
     private int quantidade;
 
-    @Column(name = "preco_unitario",nullable = false)
+    @Column(name = "preco_unitario",precision = 18, scale = 2, nullable = false)
     private BigDecimal precoUnitario;
 }

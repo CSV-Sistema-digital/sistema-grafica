@@ -1,6 +1,6 @@
 package br.com.grafica.backend.model;
 
-import br.com.grafica.backend.Enum.StatusPedido;
+import br.com.grafica.backend.enums.StatusPedido;
 import jakarta.persistence.*;
 
 import java.math.BigDecimal;
@@ -17,7 +17,7 @@ public class Pedido {
     private UUID id;
 
     @ManyToOne
-    @JoinColumn(name = "cliente_id", nullable = false)
+    @JoinColumn(name = "id_cliente", nullable = false)
     private Cliente cliente;
 
     @Column(name = "data", nullable = false)
