@@ -3,13 +3,12 @@ package br.com.grafica.backend.controller;
 import br.com.grafica.backend.model.Produto;
 import br.com.grafica.backend.service.ProdutoService;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/produtos")
 public class ProdutoController {
 
     private final ProdutoService produtoService;
@@ -19,17 +18,17 @@ public class ProdutoController {
 
     }
 
-    @GetMapping("/produto")
+    @GetMapping()
     public List<Produto> listarProdutos(){
         return produtoService.listarProdutos();
     }
 
-    @GetMapping("produto/{id}")
+    @GetMapping("/{id}")
     public Produto buscarProdutoPorId(@PathVariable("id") UUID id) {
         return produtoService.buscarPorId(id);
     }
 
-    @GetMapping("/produto/pesquisa")
+    @GetMapping("/pesquisa")
     public List<Produto> pesquisarPorNome(@RequestParam String nome){
         return produtoService.pesquisarPorNome(nome);
     }
