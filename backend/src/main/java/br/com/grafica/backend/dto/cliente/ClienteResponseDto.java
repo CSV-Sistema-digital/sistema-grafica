@@ -6,8 +6,7 @@ public record ClienteResponseDto(
 
         UUID id,
         String nome,
-        String emai,
-        String cpf,
+        String email,
         String telefone
 
 ) {

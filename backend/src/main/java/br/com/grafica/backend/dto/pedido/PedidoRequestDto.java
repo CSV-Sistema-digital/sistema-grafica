@@ -1,16 +1,13 @@
 package br.com.grafica.backend.dto.pedido;
 
-import br.com.grafica.backend.enums.StatusPedido;
-import br.com.grafica.backend.model.Cliente;
+import br.com.grafica.backend.dto.cliente.ClienteRequestDto;
+import br.com.grafica.backend.dto.itempedido.ItemPedidoRequestDto;
 
-import java.math.BigDecimal;
-import java.time.LocalDate;
+import java.util.List;
 
 public record PedidoRequestDto(
 
-        Cliente id_cliente,
-        LocalDate data,
-        BigDecimal valorTotal,
-        StatusPedido status
+        ClienteRequestDto cliente,
+        List<ItemPedidoRequestDto> itens
 ) {
 }
