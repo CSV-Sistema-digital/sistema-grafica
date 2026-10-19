@@ -7,7 +7,7 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
-public record PedidoResponseDto(
+public record PedidoResponse(
 
         UUID id,
         ClienteRequestDto clienteRequestDto,

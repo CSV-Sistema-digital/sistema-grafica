@@ -27,4 +27,9 @@ public class Produto {
     @Column(name = "preco", nullable = false, precision = 18, scale = 2)
     private BigDecimal preco;
 
+    @Column(name = "imagem", nullable = false, length = 1000)
+    private String imagem;
+
+    @Column(name = "categoria", nullable = false, length = 100)
+    private  String categoria;
 }

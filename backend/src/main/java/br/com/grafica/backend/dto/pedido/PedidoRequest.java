@@ -5,7 +5,7 @@ import br.com.grafica.backend.dto.itempedido.ItemPedidoRequestDto;
 
 import java.util.List;
 
-public record PedidoRequestDto(
+public record PedidoRequest(
 
         ClienteRequestDto cliente,
         List<ItemPedidoRequestDto> itens

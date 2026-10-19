@@ -11,6 +11,8 @@ create table produto (
 	nome varchar (150) not null,
 	descricao varchar (150) not null,
 	preco numeric (18,2) not null,
+	imagem varchar(1000) not null,
+	categoria varchar(100) not null,
 
 	constraint chek_produto_preco
        check (preco >= 0)
