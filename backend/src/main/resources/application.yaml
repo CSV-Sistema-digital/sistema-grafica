@@ -3,9 +3,9 @@ spring:
     name: backend
 
   datasource:
-    url: jdbc:postgresql://localhost:5432/grafica_db
-    username: postgres
-    password: postgres
+    url: ${DB_URL_CSV}
+    username: ${DB_USERNAME_CSV}
+    password: ${DB_PASSWORD_CSV}
     driver-class-name: org.postgresql.Driver
 
   jpa:
