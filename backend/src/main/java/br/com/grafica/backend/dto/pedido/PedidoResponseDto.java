@@ -1,19 +1,24 @@
 package br.com.grafica.backend.dto.pedido;
 
-import br.com.grafica.backend.dto.cliente.ClienteRequestDto;
+import br.com.grafica.backend.enums.FormaPagamento;
+import br.com.grafica.backend.enums.StatusPagamento;
 import br.com.grafica.backend.enums.StatusPedido;
+import br.com.grafica.backend.model.ItemPedido;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.UUID;
 
 public record PedidoResponseDto(
 
         UUID id,
-        ClienteRequestDto clienteRequestDto,
         LocalDateTime data,
+        List<ItemPedido> itens,
         BigDecimal valorTotal,
-        StatusPedido statusPedido
+        FormaPagamento formaPagamento,
+        StatusPedido statusPedido,
+        StatusPagamento statusPagamento
 
 ) {
 }
