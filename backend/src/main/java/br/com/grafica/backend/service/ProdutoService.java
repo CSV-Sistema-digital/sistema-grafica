@@ -1,6 +1,7 @@
 package br.com.grafica.backend.service;
 
 import br.com.grafica.backend.dto.produto.ProdutoResponseDto;
+import br.com.grafica.backend.exception.ProdutoNaoEncontradoException;
 import br.com.grafica.backend.model.Produto;
 import br.com.grafica.backend.repository.ProdutoRepository;
 import org.springframework.stereotype.Service;
@@ -35,7 +36,7 @@ public class ProdutoService {
     public ProdutoResponseDto buscarPorId(UUID id){
         Produto produto = produtoRepository.findById(id)
                 .orElseThrow(()->
-                        new RuntimeException("Produto não encontrado"));
+                        new ProdutoNaoEncontradoException("Produto não encontrado"));
 
         return converterParaDto(produto);
     }
