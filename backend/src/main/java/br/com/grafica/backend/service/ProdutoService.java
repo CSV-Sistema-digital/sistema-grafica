@@ -19,27 +19,32 @@ public class ProdutoService {
 
     }
 
+
     public List<ProdutoResponseDto> listarProdutos() {
-        return produtoRepository.findAll()
+        return produtoRepository.findAllByAtivoTrue()
                 .stream()
                 .map(this::converterParaDto)
                 .toList();
     }
 
-    public List<ProdutoResponseDto> pesquisarPorNome(String nome){
-        return produtoRepository.findByNomeContainingIgnoreCase(nome)
+    public List<ProdutoResponseDto> pesquisarPorNome(String nome) {
+        return produtoRepository
+                .findByNomeContainingIgnoreCaseAndAtivoTrue(nome)
                 .stream()
                 .map(this::converterParaDto)
                 .toList();
     }
 
-    public ProdutoResponseDto buscarPorId(UUID id){
-        Produto produto = produtoRepository.findById(id)
-                .orElseThrow(()->
-                        new ProdutoNaoEncontradoException("Produto não encontrado"));
+    public ProdutoResponseDto buscarPorId(UUID id) {
+        Produto produto = produtoRepository
+                .findByIdAndAtivoTrue(id)
+                .orElseThrow(() ->
+                        new ProdutoNaoEncontradoException(
+                                "Produto não encontrado"));
 
         return converterParaDto(produto);
     }
+
 
     private ProdutoResponseDto converterParaDto(Produto produto){
         return new ProdutoResponseDto(

@@ -32,4 +32,7 @@ public class Produto {
 
     @Column(name = "categoria", nullable = false, length = 100)
     private  String categoria;
+
+    @Column(name = "ativo", nullable = false)
+    private boolean ativo = true;
 }
