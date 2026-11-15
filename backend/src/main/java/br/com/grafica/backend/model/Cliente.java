@@ -29,4 +29,7 @@ public class Cliente {
     @Column(name = "telefone",length = 20,nullable = false)
     private String telefone;
 
+    @Column(name = "auth_user_id", unique = true)
+    private UUID authUserId;
+
 }
