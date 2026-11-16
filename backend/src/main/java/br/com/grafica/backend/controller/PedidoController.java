@@ -1,6 +1,7 @@
 
 package br.com.grafica.backend.controller;
 
+import br.com.grafica.backend.dto.pagamento.PagamentoResponseDto;
 import br.com.grafica.backend.dto.pedido.PedidoPreviaRequestDto;
 import br.com.grafica.backend.dto.pedido.PedidoPreviaResponseDto;
 import br.com.grafica.backend.dto.pedido.PedidoRequestDto;
@@ -49,5 +50,18 @@ public class PedidoController {
                         request, authUserId
                 ));
     }
+
+    @PostMapping("/{id}/confirmar-pagamento")
+    public ResponseEntity<PagamentoResponseDto> confirmarPagamento(
+            @PathVariable UUID id,
+            @AuthenticationPrincipal Jwt jwt) {
+
+        UUID authUserId = UUID.fromString(jwt.getSubject());
+
+        return ResponseEntity.ok(
+                pedidoService.confirmarPagamento(id, authUserId)
+        );
+    }
+
 
 }
