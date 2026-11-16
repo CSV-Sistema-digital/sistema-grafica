@@ -22,6 +22,7 @@ import br.com.grafica.backend.repository.PedidoRepository;
 import br.com.grafica.backend.repository.ItemPedidoRepository;
 import br.com.grafica.backend.repository.PagamentoRepository;
 
+import br.com.grafica.backend.dto.pagamento.PagamentoResponseDto;
 import br.com.grafica.backend.dto.pedido.PedidoRequestDto;
 import br.com.grafica.backend.dto.pedido.PedidoResponseDto;
 import br.com.grafica.backend.dto.itempedido.ItemPedidoResponseDto;
@@ -218,5 +219,52 @@ public class PedidoService {
                 pagamento.getStatus()
         );
     }
+
+    @Transactional
+    public PagamentoResponseDto confirmarPagamento(
+            UUID pedidoId,
+            UUID authUserId) {
+
+        Pedido pedido = pedidoRepository
+                .findByIdAndClienteAuthUserId(
+                        pedidoId, authUserId)
+                .orElseThrow(() -> new ResponseStatusException(
+                        HttpStatus.NOT_FOUND,
+                        "Pedido nao encontrado"
+                ));
+
+        Pagamento pagamento = pagamentoRepository
+                .findByPedidoId(pedido.getId())
+                .orElseThrow(() -> new ResponseStatusException(
+                        HttpStatus.NOT_FOUND,
+                        "Pagamento nao encontrado"
+                ));
+
+        if (pedido.getStatus() == StatusPedido.CANCELADO
+                || pagamento.getStatus() == StatusPagamento.CANCELADO) {
+
+            throw new ResponseStatusException(
+                    HttpStatus.CONFLICT,
+                    "Pedido ou pagamento cancelado"
+            );
+        }
+
+        if (pagamento.getStatus() == StatusPagamento.PENDENTE) {
+
+            pagamento.setStatus(StatusPagamento.CONFIRMADO);
+
+            pagamentoRepository.save(pagamento);
+        }
+
+        return new PagamentoResponseDto(
+                pedido.getId(),
+                pagamento.getId(),
+                pagamento.getValor(),
+                pagamento.getFormaPagamento(),
+                pedido.getStatus(),
+                pagamento.getStatus()
+        );
+    }
+
 
 }
