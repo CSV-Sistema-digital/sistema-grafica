@@ -3,6 +3,9 @@ package br.com.grafica.backend.controller;
 
 import br.com.grafica.backend.dto.pedido.PedidoPreviaRequestDto;
 import br.com.grafica.backend.dto.pedido.PedidoPreviaResponseDto;
+import br.com.grafica.backend.dto.pedido.PedidoRequestDto;
+import br.com.grafica.backend.dto.pedido.PedidoResponseDto;
+import org.springframework.http.HttpStatus;
 import br.com.grafica.backend.service.PedidoService;
 
 import jakarta.validation.Valid;
@@ -32,4 +35,19 @@ public class PedidoController {
                 pedidoService.calcularPrevia(request, authUserId)
         );
     }
+
+    @PostMapping
+    public ResponseEntity<PedidoResponseDto> criarPedido(
+            @Valid @RequestBody PedidoRequestDto request,
+            @AuthenticationPrincipal Jwt jwt) {
+
+        UUID authUserId = UUID.fromString(jwt.getSubject());
+
+        return ResponseEntity
+                .status(HttpStatus.CREATED)
+                .body(pedidoService.criarPedido(
+                        request, authUserId
+                ));
+    }
+
 }
