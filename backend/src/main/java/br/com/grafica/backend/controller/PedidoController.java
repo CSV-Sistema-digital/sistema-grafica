@@ -16,6 +16,7 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.UUID;
 
 @RestController
@@ -63,5 +64,26 @@ public class PedidoController {
         );
     }
 
+    @GetMapping
+    public ResponseEntity<List<PedidoResponseDto>> listarPedidos(
+            @AuthenticationPrincipal Jwt jwt) {
 
+        UUID authUserId = UUID.fromString(jwt.getSubject());
+
+        return ResponseEntity.ok(
+                pedidoService.listarPedidos(authUserId)
+        );
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<PedidoResponseDto> buscarPedidoPorId(
+            @PathVariable UUID id,
+            @AuthenticationPrincipal Jwt jwt) {
+
+        UUID authUserId = UUID.fromString(jwt.getSubject());
+
+        return ResponseEntity.ok(
+                pedidoService.buscarPedidoPorId(id, authUserId)
+        );
+    }
 }
