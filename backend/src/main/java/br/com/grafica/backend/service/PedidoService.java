@@ -266,5 +266,67 @@ public class PedidoService {
         );
     }
 
+    @Transactional(readOnly = true)
+    public List<PedidoResponseDto> listarPedidos(
+            UUID authUserId) {
+
+        return pedidoRepository
+                .findAllByClienteAuthUserIdOrderByDataDesc(
+                        authUserId)
+                .stream()
+                .map(this::converterPedidoParaDto)
+                .toList();
+    }
+
+
+    @Transactional(readOnly = true)
+    public PedidoResponseDto buscarPedidoPorId(
+            UUID pedidoId,
+            UUID authUserId) {
+
+        Pedido pedido = pedidoRepository
+                .findByIdAndClienteAuthUserId(
+                        pedidoId, authUserId)
+                .orElseThrow(() -> new ResponseStatusException(
+                        HttpStatus.NOT_FOUND,
+                        "Pedido nao encontrado"
+                ));
+
+        return converterPedidoParaDto(pedido);
+    }
+
+    private PedidoResponseDto converterPedidoParaDto(
+            Pedido pedido) {
+
+        Pagamento pagamento = pagamentoRepository
+                .findByPedidoId(pedido.getId())
+                .orElseThrow(() -> new ResponseStatusException(
+                        HttpStatus.NOT_FOUND,
+                        "Pagamento nao encontrado"
+                ));
+
+        List<ItemPedidoResponseDto> itens =
+                itemPedidoRepository
+                        .findAllByPedidoId(pedido.getId())
+                        .stream()
+                        .map(item -> new ItemPedidoResponseDto(
+                                item.getId(),
+                                item.getProduto().getId(),
+                                item.getProduto().getNome(),
+                                item.getQuantidade(),
+                                item.getPrecoUnitario()
+                        ))
+                        .toList();
+
+        return new PedidoResponseDto(
+                pedido.getId(),
+                pedido.getData(),
+                itens,
+                pedido.getValorTotal(),
+                pagamento.getFormaPagamento(),
+                pedido.getStatus(),
+                pagamento.getStatus()
+        );
+    }
 
 }
