@@ -8,10 +8,16 @@ spring:
     password: ${DB_PASSWORD_CSV}
     driver-class-name: org.postgresql.Driver
 
+    hikari:
+      maximum-pool-size: 5
+      minimum-idle: 1
+      idle-timeout: 60000
+      connection-timeout: 30000
+
   jpa:
     hibernate:
       ddl-auto: none
-    show-sql: true
+    show-sql: false
 
   security:
     oauth2:
@@ -20,9 +26,12 @@ spring:
           issuer-uri: ${SUPABASE_URL}/auth/v1
           jwk-set-uri: ${SUPABASE_URL}/auth/v1/.well-known/jwks.json
 
+server:
+  port: ${PORT:8080}
+
 logging:
   level:
-    org.springframework.security: DEBUG
+    org.springframework.security: INFO
 
 app:
   cors:
